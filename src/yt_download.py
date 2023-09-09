@@ -3,6 +3,8 @@ from yt_dlp import YoutubeDL
 import logging
 import os
 
+log = logging.getLogger("YTMusicHistoryDownloader")
+
 opts = {
     'format': 'm4a/bestaudio/best',
     'outtmpl': '/downloads/%(id)s.%(ext)s',
@@ -44,7 +46,7 @@ def yt_download(data, auth=False):
                         comment=None, comment_url=None, rest={'HttpOnly': None},
                         domain_initial_dot=True, port_specified=False, domain_specified=True, path_specified=False))
 
-            logging.debug(f'Downloading [{data["video_id"]}] {data["name"]} by {data["artist"]}')
+            log.debug(f'Downloading [{data["video_id"]}] {data["name"]} by {data["artist"]}')
             ydl.download([f'https://music.youtube.com/watch?v={data["video_id"]}'])
     except Exception as e:
         raise e
