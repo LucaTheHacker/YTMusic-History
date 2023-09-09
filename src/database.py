@@ -48,3 +48,12 @@ class Database:
             self.conn.commit()
         except sqlite3.IntegrityError:
             pass
+
+    def get_stats(self):
+        self.cur.execute('''SELECT COUNT(*) FROM songs''')
+        song_count = self.cur.fetchone()[0]
+
+        self.cur.execute('''SELECT COUNT(*) FROM view''')
+        view_count = self.cur.fetchone()[0]
+
+        return song_count, view_count

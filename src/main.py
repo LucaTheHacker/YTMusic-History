@@ -3,6 +3,7 @@ import time
 import sys
 import os
 
+from utils import get_fs_stats
 from database import Database
 from yt_download import yt_download
 from yt_request import fetch_history
@@ -37,6 +38,7 @@ def download():
     data = fetch_history()
 
     auth_required_queue = []
+    downloaded_count, auth_count, errors_count = 0, 0, 0
     i = 0
     for group in data:
         for element in group['musicShelfRenderer']['contents']:
@@ -49,6 +51,9 @@ def download():
                 except Exception as e:
                     print(f"Failure on {data['video_id']} {data['name']}: {e}, adding to auth_queue", file=sys.stderr)
                     auth_required_queue.append(data)
+                    errors_count += 1
+                finally:
+                    downloaded_count += 1
 
             if i == 0:
                 db.add_view(data['video_id'], datetime.now().strftime('%d/%m/%Y'))
@@ -60,7 +65,11 @@ def download():
             yt_download(data, auth=True)
         except Exception as e:
             print(f"Failure on {data['video_id']} {data['name']}: {e}, skipping", file=sys.stderr)
-            pass
+            errors_count += 1
+        finally:
+            auth_count += 1
+
+    print(f"Downloaded {downloaded_count} songs, {auth_count} auth required, {errors_count} errors")
 
 
 if __name__ == '__main__':
@@ -77,4 +86,12 @@ if __name__ == '__main__':
         start = datetime.now()
         download()
         print(f"Downloaded in {datetime.now() - start}")
+
+        download_folder_size, download_folder_filecount, database_size = get_fs_stats()
+        print(f"Download folder size ({download_folder_filecount}): {download_folder_size / 1024 / 1024:.2f} MB")
+        print(f"Database size: {database_size / 1024 / 1024:.2f} MB")
+        song_count, view_count = db.get_stats()
+        print(f"Database song count: {song_count}, view count: {view_count}")
+
+        print(f"Sleeping for {os.getenv('INTERVAL', 24)} hours")
         time.sleep(60 * 60 * int(os.getenv('INTERVAL', 24)))
