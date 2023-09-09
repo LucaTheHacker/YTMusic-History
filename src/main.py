@@ -37,6 +37,8 @@ def data_from_element(element):
 
 def download():
     data = fetch_history()
+    data_groups_length = [len(group['musicShelfRenderer']['contents']) for group in data]
+    logging.info(f"Received {data_groups_length} ({sum(data_groups_length)}) songs")
 
     auth_required_queue = []
     downloaded_count, auth_count, errors_count = 0, 0, 0
