@@ -27,7 +27,6 @@ opts = {
     'quiet':          True,
     'no_warnings':    True,
     'noprogress':     True,
-    'ignoreerrors':   True,
 }
 
 
