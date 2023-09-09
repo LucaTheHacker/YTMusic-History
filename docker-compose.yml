@@ -7,7 +7,7 @@ services:
 
     volumes:
       - ${DOWNLOADS_DIR:-./downloads}:/downloads
-      - ${DATABASE_PATH:-./database}:/database
+      - ${DATABASE_DIR:-./database}:/database
 
     environment:
       COOKIE: ${COOKIE}
