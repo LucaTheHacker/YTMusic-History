@@ -9,4 +9,4 @@ RUN apt -y remove python3-dev
 
 COPY .. /home/
 WORKDIR /home/
-CMD ["python", "/home/main.py"]
+CMD ["python", "-u", "/home/main.py"]
