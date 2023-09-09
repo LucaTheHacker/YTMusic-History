@@ -3,12 +3,24 @@ from yt_dlp import YoutubeDL
 import os
 
 opts = {
-    'format': 'bestaudio/best',
+    'format': 'm4a/bestaudio/best',
     'outtmpl': '/downloads/%(id)s.%(ext)s',
-    'postprocessors': [{
-        'key': 'FFmpegExtractAudio',
-        'preferredcodec': 'mp3',
-    }],
+    'writethumbnail': True,
+    'embedthumbnail': True,
+    'postprocessors': [
+        {
+            'key': 'FFmpegMetadata',
+            'add_metadata': True,
+        },
+        {
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'm4a',
+            'preferredquality': 'best',
+        },
+        {
+            'key': 'EmbedThumbnail',
+        },
+    ],
     'quiet': True,
     'no_warnings': True,
     'noprogress': True,
