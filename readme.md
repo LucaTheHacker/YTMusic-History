@@ -31,11 +31,11 @@ Click on the history logo (the clock with the arrow), one request with endpoint 
 Select the headers tab and scroll to "Request Headers". 
 Copy the content of COOKIE and AUTHENTICATION in the .env file.  
 
-COOKIE is the cookie you get from your browser.  
-AUTHENTICATION is the authentication token you get from your browser.  
-DOWNLOAD_DIR is the directory where the songs will be downloaded.  
-DATABASE_PATH is the path where the database will be stored.  
-INTERVAL is the interval between each run, in hours, 24 is recommended.
+`COOKIE` is the cookie you get from your browser.  
+`AUTHENTICATION` is the authentication token you get from your browser.  
+`DOWNLOAD_DIR` is the directory where the songs will be downloaded.  
+`DATABASE_DIR` is the path where the database will be stored.  
+`INTERVAL` is the interval between each run, in hours, 24 is recommended.
 
 #### Start the containers
 
