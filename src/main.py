@@ -1,4 +1,5 @@
 from datetime import datetime
+import logging
 import time
 import sys
 import os
@@ -49,7 +50,7 @@ def download():
                     # Download song if it hasn't been added to db yet
                     yt_download(data)
                 except Exception as e:
-                    print(f"Failure on {data['video_id']} {data['name']}: {e}, adding to auth_queue", file=sys.stderr)
+                    logging.warning(f"Failure on {data['video_id']} {data['name']}: {e}, adding to auth_queue")
                     auth_required_queue.append(data)
                     errors_count += 1
                 finally:
@@ -64,34 +65,34 @@ def download():
         try:
             yt_download(data, auth=True)
         except Exception as e:
-            print(f"Failure on {data['video_id']} {data['name']}: {e}, skipping", file=sys.stderr)
+            logging.error(f"Failure on {data['video_id']} {data['name']}: {e}, skipping")
             errors_count += 1
         finally:
             auth_count += 1
 
-    print(f"Downloaded {downloaded_count} songs, {auth_count} auth required, {errors_count} errors")
+    logging.info(f"Downloaded {downloaded_count} songs, {auth_count} auth required, {errors_count} errors")
 
 
 if __name__ == '__main__':
     if os.getenv("COOKIE") is None or len(os.getenv("COOKIE")) < 8:
-        print("Please set the COOKIE environment variable to your YouTube Music cookie", file=sys.stderr)
+        logging.error("Please set the COOKIE environment variable to your YouTube Music cookie")
         exit(1)
 
     if os.getenv("AUTHORIZATION") is None or len(os.getenv("AUTHORIZATION")) < 8:
-        print("Please set the AUTHORIZATION environment variable to your YouTube Music authorization", file=sys.stderr)
+        logging.error("Please set the AUTHORIZATION environment variable to your YouTube Music authorization")
         exit(1)
 
     print("YTMusic History Downloader started")
     while True:
         start = datetime.now()
         download()
-        print(f"Downloaded in {datetime.now() - start}")
+        logging.info(f"Downloaded in {datetime.now() - start}")
 
         download_folder_size, download_folder_filecount, database_size = get_fs_stats()
-        print(f"Download folder size ({download_folder_filecount}): {download_folder_size / 1024 / 1024:.2f} MB")
-        print(f"Database size: {database_size / 1024 / 1024:.2f} MB")
+        logging.info(f"Download folder size ({download_folder_filecount}): {download_folder_size / 1024 / 1024:.2f} MB")
+        logging.info(f"Database size: {database_size / 1024 / 1024:.2f} MB")
         song_count, view_count = db.get_stats()
-        print(f"Database song count: {song_count}, view count: {view_count}")
+        logging.info(f"Database song count: {song_count}, view count: {view_count}")
 
-        print(f"Sleeping for {os.getenv('INTERVAL', 24)} hours")
+        logging.debug(f"Sleeping for {os.getenv('INTERVAL', 24)} hours")
         time.sleep(60 * 60 * int(os.getenv('INTERVAL', 24)))
