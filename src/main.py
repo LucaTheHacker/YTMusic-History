@@ -58,7 +58,7 @@ def download():
                     log.warning(f"Failure on {data['video_id']} {data['name']}: {e}, adding to auth_queue")
                     auth_required_queue.append(data)
                     errors_count += 1
-                finally:
+                else:
                     downloaded_count += 1
 
             if i == 0:
@@ -70,9 +70,9 @@ def download():
         try:
             yt_download(data, auth=True)
         except Exception as e:
-            log.error(f"Failure on {data['video_id']} {data['name']}: {e}, skipping")
             errors_count += 1
-        finally:
+            log.error(f"Failure on {data['video_id']} {data['name']}: {e}, skipping")
+        else:
             auth_count += 1
 
     log.info(f"Downloaded {downloaded_count} songs, {auth_count} auth required, {errors_count} errors")
