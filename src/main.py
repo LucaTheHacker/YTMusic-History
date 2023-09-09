@@ -31,10 +31,10 @@ def data_from_element(element):
     artist = ''.join([obj['text'] for obj in col[1][x]['text']['runs']]).split("•")[0].strip()
 
     return {
-        'name': name,
+        'name':     name,
         'video_id': video_id,
-        'album': album,
-        'artist': artist,
+        'album':    album,
+        'artist':   artist,
     }
 
 
