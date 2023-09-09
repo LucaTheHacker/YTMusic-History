@@ -57,7 +57,6 @@ def download():
                 except Exception as e:
                     log.warning(f"Failure on {data['video_id']} {data['name']}: {e}, adding to auth_queue")
                     auth_required_queue.append(data)
-                    errors_count += 1
                 else:
                     downloaded_count += 1
 
