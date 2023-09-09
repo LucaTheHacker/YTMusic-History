@@ -41,7 +41,6 @@ def download():
     for group in data:
         for element in group['musicShelfRenderer']['contents']:
             data = data_from_element(element)
-            print(data)
 
             if db.add_song(data['name'], data['video_id'], data['album'], data['artist']):
                 try:
