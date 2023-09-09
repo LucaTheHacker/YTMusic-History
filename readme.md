@@ -28,7 +28,7 @@ A nice way to always keep track of what you like to listen - even if copyright l
 Open https://music.youtube.com/library, and open the developer console.  
 Developer console > Network tab > filter by XHR.  
 Click on the history logo (the clock with the arrow), one request with endpoint starting with "browse" should appear.  
-Select the headers tab and scroll to "Request Headers". 
+Select the headers tab and scroll to "Request Headers".  
 Copy the content of COOKIE and AUTHENTICATION in the .env file.  
 
 `COOKIE` is the cookie you get from your browser.  
