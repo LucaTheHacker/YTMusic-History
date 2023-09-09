@@ -51,11 +51,11 @@ at myself for my music taste.
 ## Workarounds
 
 YouTube, thanks to their asshole-being, does not consent to stream music from two different devices
-(Because who thinks I may have left my phone playing music at no volume whilst I'm at my computer!).
-At the same time, downloading all the songs with an account would cause continuous "song paused due to stream on another device" errors.
+(Because who thinks I may have left my phone playing music at no volume whilst I'm at my computer!).  
+At the same time, downloading all the songs with an account would cause continuous "song paused due to stream on another device" errors.  
 Whilst using the same account on two different devices is forbidden, YouTube doesn't allow to download some songs without logging in,
-even if they're not 18+ or restricted in any way.
-To work around this pile of garbage, a first try with no account is made, and if the song is not downloadable it's sent to the authenticated queue.
+even if they're not 18+ or restricted in any way.  
+To work around this pile of garbage, a first try with no account is made, and if the song is not downloadable it's sent to the authenticated queue.  
 This should reduce the amount of music stops by a lot.
 
 Thanks Google. 
